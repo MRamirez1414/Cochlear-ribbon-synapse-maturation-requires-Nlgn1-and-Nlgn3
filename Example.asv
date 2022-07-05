@@ -1,0 +1,41 @@
+%% 
+
+Slope_of_x_intercept = [value of data slope]; %angle rotation for Y as the new X
+thetaw1_1 = pi/2 - atan(Slope_of_x_intercept);
+Rotation_Matrix = [cos(thetaw1_1), -sin(thetaw1_1), 0; sin(thetaw1_1), cos(thetaw1_1), 0; 0,0,1]; %Matrix rotation values
+Data_Values_Input = [WT1_1(:,1),WT1_1(:,2),WT1_1(:,3)]; %data vector for x,y,z
+Rotated_WT1_1 = Rotation_Matrix * Data_Values_Input';
+
+
+figure('name','Wt1_11');
+subplot(1,4,1)
+plot(WT1_1(:,2),WT1_1(:,1),'.');
+title('Before Rotation')
+subplot(1,4,2)
+plot(Rotated_WT1_1(2,:),Rotated_WT1_1(1,:),'.');
+title('After Rotation')
+subplot(1,4,3)
+scatter(Rotated_WT1_1(2,:),Rotated_WT1_1(3,:),WT1_1(:,4));
+title('After Rotation on Y vs Z')
+xlabel('X')
+ylabel('Z')
+subplot(1,4,4)
+scatter(Rotated_WT1_1(1,:),Rotated_WT1_1(3,:),WT1_1(:,4)); %Rotation with size
+title('After Rotation on X vs Z w/volume')
+xlabel('Y')
+ylabel('Z')
+
+%xz Composite graph, must solve above for all data entries prior to this
+%step to find modiolar vs pillar distributions
+figure( 'name', 'Distribution')
+scatter(([Inpute](1,:)+21),([Inpute](3,:)-15),([Input](:,4)*5),'filled', 'r') %data input with y-intercept to zero dataset at 0
+title('Distribution XZ')
+xlabel('Distance From Base of Hair Cell (um)')
+ylabel('Distance From Center of Hair Cell (um)')
+xlim([-15 10])
+ylim([-15 10])
+hold on
+
+scatter(-([Input1](1,:)- 36.5),([Input2](3,:)- 15),([Input2](:,4)*5), 'filled','k') %rotation on X
+hold off
+
